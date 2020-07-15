@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane fx:id="mainsplit" dividerPositions="0.2449725776965265" minHeight="549.0" minWidth="565.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ImportController">
+   <items>
+      <AnchorPane fx:id="topsplit" minHeight="0.0" minWidth="0.0" prefHeight="143.0" prefWidth="563.0" style="-fx-background-color: grey;" SplitPane.resizableWithParent="false">
+         <children>
+            <Button fx:id="openfilebtn" layoutX="433.0" layoutY="52.0" mnemonicParsing="false" onAction="#openFileHandler" text="Open File" />
+            <TextField fx:id="filepathtxtfld" disable="true" editable="false" layoutX="32.0" layoutY="52.0" prefHeight="27.0" prefWidth="384.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="botsplit" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <TableView fx:id="stepstable" editable="true" layoutY="2.0" prefHeight="409.0" prefWidth="565.0">
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </children></AnchorPane>
+   </items>
+</SplitPane>
