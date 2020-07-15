@@ -34,6 +34,8 @@ import javafx.stage.Stage;
 
 public class ImportController implements Initializable {
 
+	private ObservableList<String> lineholder = FXCollections.observableArrayList();
+	
 	private FileChooser fc;
 	@FXML
 	private SplitPane mainsplit;
@@ -74,76 +76,116 @@ public class ImportController implements Initializable {
 	    chooser.getExtensionFilters().addAll(new ExtensionFilter("CSV Files", "*.csv"));
 		File file = chooser.showOpenDialog(new Stage()).getAbsoluteFile();
         if (file != null) {
-//        	String path = "/Users/christopher.hendlibm.com/Documents/IBM/projects/@SCMMRP/CGISS-35253.csv";
+        	String path = "///" + file.getAbsolutePath();
+        	
+    		ObservableList<Step> teststeps = testReadCSV(new File(path));
+    		stepstable.setItems(teststeps);
+    		int index = 0;
+    		stepstable.getColumns().addAll(stepnumcol, stepcol, datacol, resultcol);
+    	} 
+//        else {
+//        	String path = "///Users/christopher.hendlibm.com/Documents/IBM/projects/@SCMMRP/CGISS-35253.csv";
 //    		ObservableList<Step> teststeps = readCSV(new File(path));
 //    		stepstable.setItems(teststeps);
 //    		int index = 0;
 //    		stepstable.getColumns().addAll(stepnumcol, stepcol, datacol, resultcol);
-//        	String cwd = System. getProperty("user.dir");
-        	String path = "///" + file.getAbsolutePath();
-        	
-    		ObservableList<Step> teststeps = readCSV(new File(path));
-    		stepstable.setItems(teststeps);
-    		int index = 0;
-    		stepstable.getColumns().addAll(stepnumcol, stepcol, datacol, resultcol); 
-    	} else {
-        	String path = "///Users/christopher.hendlibm.com/Documents/IBM/projects/@SCMMRP/CGISS-35253.csv";
-    		ObservableList<Step> teststeps = readCSV(new File(path));
-    		stepstable.setItems(teststeps);
-    		int index = 0;
-    		stepstable.getColumns().addAll(stepnumcol, stepcol, datacol, resultcol);
-        }
+//        }
 
 	}
 	
-	public ObservableList<Step> readCSV(File path) throws FileNotFoundException {
+	public ObservableList<Step> testReadCSV(File path) throws FileNotFoundException {
 		ObservableList<Step> steps = FXCollections.observableArrayList();
+		String regexA = "[\\w*[\\w*,]|[\\w\\d,]|[\\w*\\s,]]*";
 		String line = "";
-		String[] holder = new String[3];
-		ArrayList<String> stepline = new ArrayList<String>();
+		String[] holder;
+		ArrayList<String> steplines = new ArrayList<String>();
 		int index = 0;
 		int count = 1;
 		Scanner sc = new Scanner(path);
 		while (sc.hasNextLine()) {
-			line = sc.nextLine();
-			if (!line.isBlank()){
-				if (!line.matches("Step,Data,Expected Result")) {
-					holder = line.split(",");
-					for (int i = 0; i < holder.length; i++) {
-						if (holder[i].isEmpty()) {
-							stepline.add(" ");
-						} else {
-							stepline.add(holder[i]);
-						}
-					}
-					steps.add(new Step(String.valueOf(count), stepline.get(0), stepline.get(1), stepline.get(2)));
-					count++;
-					stepline.clear();
-				}
+			line = sc.next();
+			if (line.matches(regexA)) {
+				
 			}
-			
 		}
-//		sc.useDelimiter(",");   //sets the delimiter pattern 
-//		int index = 0;
-//		int count = 1;
-//		while (sc.hasNext()) {
-//			line = sc.next();
-//			if (index <= 2) {
-//				if (!line.equals("Step") && !line.equals("Data") && !line.contains("Expected Result")) {
-//					stepline[index] = line;
-//					index++;
-//				}
-//			} else {
-//				steps.add(new Step(String.valueOf(count), stepline[0], stepline[1], stepline[2]));
-//				index = 0;
-//				count++;
-//			}
-//		}   
-		sc.close();
+		StringBuilder sb = new StringBuilder();
+		sb.append("bob");
+		sb.append("job");
+		sb.append("mob");
 		
+		System.out.println(sb);
+		
+		steps.add(new Step("1", "boot", "shoot", "POOT"));
 		return steps;
 	}
+//	public ObservableList<Step> readCSV(File path) throws FileNotFoundException {
+//		ObservableList<Step> steps = FXCollections.observableArrayList();
+//		String pline = "";
+//		String line = "";
+//		String[] holder;
+//		ArrayList<String> stepline = new ArrayList<String>();
+//		int index = 0;
+//		int count = 1;
+//		Scanner sc = new Scanner(path);
+////		sc.useDelimiter(",|\\r\\n");
+//		sc.useDelimiter(",");
+//		while (sc.hasNext()) {
+//			line = sc.next();
+////			if (!line.matches("Step,Data,Expected Result")) {
+//			if (!line.equals("Step") && !line.equals("Data") && !line.contains("Expected Result")) {
+//				if (line.contains("\\r\\n")) {
+//					pline = line;
+//				}
+//				
+//				index++;
+//			}
+//		}
+////		while (sc.hasNextLine()) {
+////			line = sc.nextLine();
+////			if (!line.isBlank()){
+////				if (!line.matches("Step,Data,Expected Result")) {
+////					holder = line.split(",");
+////					for (int i = 0; i < holder.length; i++) {
+////						if (holder[i].isEmpty()) {
+////							stepline.add(" ");
+////						} else {
+////							stepline.add(holder[i]);
+////						}
+////					}
+////					steps.add(new Step(String.valueOf(count), stepline.get(0), stepline.get(1), stepline.get(2)));
+////					count++;
+////					stepline.clear();
+////				}
+////			}
+////			
+////		}  
+//		sc.close();
+//		
+//		return steps;
+//	}
 	
+	public void csvReader(File path) throws FileNotFoundException {
+		String part = "";
+		String line = "";
+		String[] holder;
+		ArrayList<String> stepline = new ArrayList<String>();
+		int index = 0;
+		int count = 1;
+		Scanner sc = new Scanner(path);
+		
+		sc.useDelimiter(",");
+		while (sc.hasNextLine()) {
+			part = sc.next();
+//			if (!line.matches("Step,Data,Expected Result")) {
+			if (!part.matches("Step") && !part.matches("Data") && !part.matches("Expected Result")) {
+				if (line.contains("\\r\\n")) {
+					
+				}
+				
+				index++;
+			}
+		}
+	}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
