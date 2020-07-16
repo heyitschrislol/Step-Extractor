@@ -77,7 +77,7 @@ public class ImportController implements Initializable {
 		File file = chooser.showOpenDialog(new Stage()).getAbsoluteFile();
         if (file != null) {
         	String path = "///" + file.getAbsolutePath();
-        	ArrayList<String> steplines = testReadCSV(new File(path));
+        	ArrayList<String> steplines = testBufferReadCSV(new File(path));
     		ObservableList<Step> teststeps = sortSteps(steplines);
     		stepstable.setItems(teststeps);
     		stepstable.getColumns().addAll(stepnumcol, stepcol, datacol, resultcol);
@@ -97,59 +97,121 @@ public class ImportController implements Initializable {
 		ArrayList<String> rawlines = new ArrayList<String>();
 		
 		Scanner sc = new Scanner(path);
-		while (sc.hasNextLine()) {
-			line = sc.nextLine();
+		sc.useDelimiter(",");
+		while (sc.hasNext(",")) {
+			line = sc.next();
 			rawlines.add(line);
+		}
+		int index = 1;
+		for (String s : rawlines) {
+			if (index > 3) {
+				index = 1;
+			}
+			System.out.println(index + " " + s);
+			index++;
 		}
 		sc.close();
 		return rawlines;
 	}
+	public ArrayList<String> testBufferReadCSV(File path) throws IOException {
+		String line = "";
+		StringBuilder sb = new StringBuilder();
+		ArrayList<String> rawlines = new ArrayList<String>();
+		String[] lines;
+		BufferedReader br = new BufferedReader(new FileReader(path));
+		int i = 0;
+		while((line = br.readLine())!= null){
+			if (line.matches("Step@Data@Expected Result")) {
+				continue;
+			}
+			if (i == 0) {
+				sb.append(line);
+				i++;
+				continue;
+			}
+			if (line.contains("@")) {
+				sb.append("@" + line);
+			} else {
+				sb.append("%%" + line);
+			}
+			
+		}
+//		System.out.println(sb);
+		lines = sb.toString().split("@");
+		for (String s : lines) {
+			if (s.isBlank()) {
+				s = "--";
+			}
+//			System.out.println(i + ". " + s);
+			rawlines.add(s);
+			i++;
+		}
+		br.close();
+		return rawlines;
+	}
 	public ObservableList<Step> sortSteps(ArrayList<String> rawlines) {
 		ObservableList<Step> steps = FXCollections.observableArrayList();
-		ArrayList<String> sortedlines = new ArrayList<String>();
-		String pholder = " ";
-//		String line;
-		String regexA = "[[\\w*\\s*]*[@+][\\p{Punct}&&[^@]]]*";
-		String[] holder = new String[3];
-		boolean addstep = false;
-		int j = 0;
-//		int z = 0;
-		int linecount = 0;
-		int stepcount = 0;
-		for (int i = 0; i < rawlines.size(); i++) {
-			if (addstep) {
-				steps.add(new Step(String.valueOf(stepcount), holder[0], holder[1], holder[2]));
-				addstep = false;
+		int index = 0;
+		int count = 0;
+		String[] pholder = new String[3];
+		for (String s : rawlines) {
+			if (index > 2) {
+				index = 0;
+				count++;
+				steps.add(new Step(String.valueOf(count), pholder[0], pholder[1], pholder[2]));
 			}
-			if (rawlines.get(i).matches(regexA)) {
-				if (rawlines.get(i).matches("Step@Data@Expected Result")) {
-					continue;
-				}
-				j = i + 1;
-				stepcount++;
-				linecount++;
-				if (rawlines.get(j).matches(regexA)) {
-					holder = rawlines.get(i).split("@");
-					addstep = true;
-				} else {
-					holder = rawlines.get(i).split("@");
-					pholder = rawlines.get(j);
-					for (int z = 0; z < j; j++) {
-						if (rawlines.get(j + 1).matches(regexA)) {
-							z = j;
-							steps.add(new Step(String.valueOf(stepcount), holder[0], holder[1], holder[2] + "\\r\\n" + pholder));
-							j = i + 1; 
-							break;
-						} else {
-							pholder += "\\r\\n" + rawlines.get(j);
-						}
-					}
-				}
-			} 
+			pholder[index] = s;
+			index++;
 		}
 		
 		return steps;
 	}
+//	public ObservableList<Step> sortSteps(ArrayList<String> rawlines) {
+//		ObservableList<Step> steps = FXCollections.observableArrayList();
+//		ArrayList<String> sortedlines = new ArrayList<String>();
+//		String pholder = " ";
+////		String line;
+//		String regexA = "[[\\w*\\s*]*[@+][\\p{Punct}&&[^@]]]*";
+//		String[] holder = new String[3];
+//		boolean addstep = false;
+//		int j = 0;
+////		int z = 0;
+//		int linecount = 0;
+//		int stepcount = 0;
+//		for (int i = 0; i < rawlines.size(); i++) {
+//			if (addstep) {
+//				steps.add(new Step(String.valueOf(stepcount), holder[0], holder[1], holder[2]));
+//				addstep = false;
+//			}
+//			if (rawlines.get(i).matches(regexA)) {
+//				if (rawlines.get(i).matches("Step@Data@Expected Result")) {
+//					continue;
+//				}
+//				j = i + 1;
+//				stepcount++;
+//				linecount++;
+//				if (rawlines.get(j).matches(regexA)) {
+//					holder = rawlines.get(i).split("@");
+//					addstep = true;
+//				} else {
+//					holder = rawlines.get(i).split("@");
+//					pholder = rawlines.get(j);
+//					for (int z = 0; z < j; j++) {
+//						if (rawlines.get(j + 1).matches(regexA)) {
+//							z = j;
+//							steps.add(new Step(String.valueOf(stepcount), holder[0], holder[1], holder[2] + "\\r\\n" + pholder));
+//							j = i + 1; 
+//							break;
+//						} else {
+//							pholder += "\\r\\n" + rawlines.get(j);
+//						}
+//					}
+//				}
+//			} 
+//		}
+//		
+//		return steps;
+//	}
 //	public ObservableList<Step> readCSV(File path) throws FileNotFoundException {
 //		ObservableList<Step> steps = FXCollections.observableArrayList();
 //		String pline = "";
