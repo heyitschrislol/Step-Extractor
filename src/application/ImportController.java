@@ -1,28 +1,19 @@
 package application;
 
-import java.awt.List;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 import application.Step;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,9 +25,7 @@ import javafx.stage.Stage;
 
 public class ImportController implements Initializable {
 
-	private ObservableList<String> lineholder = FXCollections.observableArrayList();
 	
-	private FileChooser fc;
 	@FXML
 	private SplitPane mainsplit;
 	@FXML
@@ -70,8 +59,6 @@ public class ImportController implements Initializable {
    
 	@FXML
 	public void openFileHandler() throws IOException {
-//		FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
-//	    Parent root = (Parent)loader.load();
 	    FileChooser chooser = new FileChooser();
 	    chooser.getExtensionFilters().addAll(new ExtensionFilter("CSV Files", "*.csv"));
 		File file = chooser.showOpenDialog(new Stage()).getAbsoluteFile();
@@ -106,13 +93,11 @@ public class ImportController implements Initializable {
 			}
 			
 		}
-//		System.out.println(sb);
 		lines = sb.toString().split("@");
 		for (String s : lines) {
 			if (s.isBlank()) {
 				s = "--";
 			}
-//			System.out.println(i + ". " + s);
 			rawlines.add(s);
 			i++;
 		}
@@ -136,7 +121,7 @@ public class ImportController implements Initializable {
 		
 		return steps;
 	}
-
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
