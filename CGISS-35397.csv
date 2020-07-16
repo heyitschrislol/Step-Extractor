@@ -1,21 +1,9 @@
-Step~Data~Expected Result
-Log into the Worker Portal as a SCEligiblity Worker~~Home page displays
-Navigate to the person from the preconditions~~Person Page displays
-Choose the action menu in the upper right hand corner~~“Non-MAGI Conversion Wizard” is listed as an option
-"Chose the “Non-MAGI Conversion Wizard” "~~the conversion wizard displays
-Enter the MEDS Household Number associated to the case from the preconditions both Household Number fields~~Both fields are populated
-Select Next~~The second page of the conversion wizard displays
-Verify that the second page list all details for the members in the household~~"The second wizard page lists the member details for all members in the MEDS Household. The following member information must be displayed for each member:
+Step@Data@Expected Result
+Select Next@@The second page of the conversion wizard displays
+Verify that the second page list all details for the members in the household@@"The second wizard page lists the member details for all members in the MEDS Household. The following member information must be displayed for each member:
 -	Member Name – This must include the First Name, Middle Name, Last Name and Suffix
 -	SSN
--	DOB
--	Medicare Number 
--	MBI Number
--	Payment Category Number (if currently eligible/previously eligible in the last 90 days)
 -	Eligibility Start and End Date (if currently eligible/previously eligible in the last 90 days)"
-Check all members and Click next~~"Conversion IEG ""Before We Start"" screen appears and functions the same as the CGIS Intake Application IEG Script"
-"Choose ""0001 No Sponsored Site"" for sponsored site and no for ""Is the application submitted by an Authorized Representative?"" and select next"~~"""About the applicant"" screen displays"
-"Click ""Save and Exit"""~~Conversion wizard closes
-Navigate to the person record for the member~~person record displays
-"Click on the ""Care and Protection"" tab"~~"""Care and Protection"" tab displays"
-"Select ""Non-MAGI Applications"""~~"IS application from conversion wizard is listed as ""In-progress"""
+Check all members and Click next@@"Conversion IEG ""Before We Start"" screen appears and functions the same as the CGIS Intake Application IEG Script"
+"Choose ""0001 No Sponsored Site"" for sponsored site and no for ""Is the application submitted by an Authorized Representative?"" and select next"@@"""About the applicant"" screen displays"
+
