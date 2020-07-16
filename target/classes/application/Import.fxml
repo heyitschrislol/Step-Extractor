@@ -24,7 +24,7 @@
             </TableView>
             <Pane fx:id="exportpane" layoutY="362.0" prefHeight="50.0" prefWidth="565.0">
                <children>
-                  <Button fx:id="exportbtn" layoutX="257.0" layoutY="13.0" mnemonicParsing="false" text="Export to JSON" />
+                  <Button fx:id="exportbtn" layoutX="234.0" layoutY="13.0" mnemonicParsing="false" onAction="#exportJSONHandler" text="Export to JSON" />
                </children>
             </Pane>
          </children></AnchorPane>
