@@ -177,16 +177,23 @@ public class ImportController implements Initializable {
 		return removeQuotes(rawlines);
 	}
 	public ArrayList<String> removeQuotes(ArrayList<String> rawlines) {
-//		ArrayList<String> lessrawlines = new ArrayList<>();
+		String formattedtext = "";
+		ArrayList<String> formattedlines = new ArrayList<>();
 		for (String s : rawlines) {
-//			b = s;
-//			s.replace('\"', '\'');
+			formattedtext = s;
 			if (s.contains("\"")) {
-				
+				formattedtext = s.replace('\"', ' ');
+				System.out.println(formattedtext);
 			}
 			
+			formattedlines.add(formattedtext);
+			
+//			s = formattedtext;
+//			s.replace('\"', '\'');
+			
+
 		}
-		return rawlines;
+		return formattedlines;
 	}
 
 	public ObservableList<Step> sortSteps(ArrayList<String> rawlines) {

@@ -8,11 +8,11 @@
 "#" : "2",
 "Step" : "Verify that the second page list all details for the members in the household",
 "Data" : "--",
-"Expected Result" : ""The second wizard page lists the member details for all members in the MEDS Household. The following member information must be displayed for each member:%%-	Member Name – This must include the First Name, Middle Name, Last Name and Suffix%%-	SSN%%-	Eligibility Start and End Date (if currently eligible/previously eligible in the last 90 days)""
+"Expected Result" : " The second wizard page lists the member details for all members in the MEDS Household. The following member information must be displayed for each member:%%-	Member Name – This must include the First Name, Middle Name, Last Name and Suffix%%-	SSN%%-	Eligibility Start and End Date (if currently eligible/previously eligible in the last 90 days) "
 },{
 "#" : "3",
 "Step" : "Check all members and Click next",
 "Data" : "--",
-"Expected Result" : ""Conversion IEG ""Before We Start"" screen appears and functions the same as the CGIS Intake Application IEG Script""
+"Expected Result" : " Conversion IEG   Before We Start   screen appears and functions the same as the CGIS Intake Application IEG Script "
 }
 ]
