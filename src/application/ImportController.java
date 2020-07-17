@@ -93,7 +93,7 @@ public class ImportController implements Initializable {
 
 		FileChooser chooser = new FileChooser();
 		chooser.setInitialFileName("jsonsteps.json");
-//		chooser.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
+		chooser.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
 		File file = chooser.showSaveDialog(new Stage());
 		if (file != null) {
 			File dir = file.getParentFile();// gets the selected directory
@@ -177,14 +177,19 @@ public class ImportController implements Initializable {
 		return removeQuotes(rawlines);
 	}
 	public ArrayList<String> removeQuotes(ArrayList<String> rawlines) {
+//		ArrayList<String> lessrawlines = new ArrayList<>();
 		for (String s : rawlines) {
-			s.replace('"', '\'');
+//			b = s;
+//			s.replace('\"', '\'');
+			if (s.contains("\"")) {
+				
+			}
+			
 		}
 		return rawlines;
 	}
 
 	public ObservableList<Step> sortSteps(ArrayList<String> rawlines) {
-//		ObservableList<Step> steps = FXCollections.observableArrayList();
 		int index = 0;
 		int count = 0;
 		String[] pholder = new String[3];
