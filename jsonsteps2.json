@@ -33,7 +33,7 @@
 "#" : "7",
 "Step" : "Verify that the second page list all details for the members in the household",
 "Data" : "--",
-"Expected Result" : "   The second wizard page lists the member details for all members in the MEDS Household. The following member information must be displayed for each member:%%-	Member Name – This must include the First Name, Middle Name, Last Name and Suffix%%-	SSN%%-	DOB%%-	Medicare Number %%-	MBI Number%%-	Payment Category Number (if currently eligible/previously eligible in the last 90 days)%%-	Eligibility Start and End Date (if currently eligible/previously eligible in the last 90 days)   "
+"Expected Result" : " The second wizard page lists the member details for all members in the MEDS Household. The following member information must be displayed for each member:%%-	Member Name – This must include the First Name, Middle Name, Last Name and Suffix%%-	SSN%%-	DOB%%-	Medicare Number %%-	MBI Number%%-	Payment Category Number (if currently eligible/previously eligible in the last 90 days)%%-	Eligibility Start and End Date (if currently eligible/previously eligible in the last 90 days) "
 },{
 "#" : "8",
 "Step" : "Check all members and Click next",
@@ -46,13 +46,8 @@
 "Expected Result" : "   About the applicant   screen displays "
 },{
 "#" : "10",
-"Step" : " Verify that the   Addresses   section is pre-populated based on the mappings defined in the mapping spreadsheet ",
+"Step" : " Verify that   Are there any other people living in the home?   is pre-populated to No, when only one member is selected on the second wizard page ",
 "Data" : " Mapping the member information from MEDS to corresponding values in the IEG script in Cùram shall be done as per the MEDS to Cùram data mappings spreadsheet  ",
-"Expected Result" : "Addresses section is pre-populated based on the mappings defined in the mapping spreadsheet"
-},{
-"#" : "11",
-"Step" : " Verify that the   Is the applicant's mailing address the same as the applicant's residential address?   is pre-populated to Yes when mailing and residential address retrieved from MEDS are the same ",
-"Data" : "--",
-"Expected Result" : "   Is the applicant's mailing address the same as the applicant's residential address?   is pre-populated to Yes when mailing and residential address retrieved from MEDS are the same "
+"Expected Result" : "   Are there any other people living in the home?   is pre-populated to No, when only one member is selected on the   About the applicant   page "
 }
 ]

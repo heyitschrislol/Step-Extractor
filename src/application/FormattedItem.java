@@ -15,7 +15,7 @@ public class FormattedItem {
 	public FormattedItem(Step step) {
 		this.stepnumber.setKey("\"#\"");
 		this.stepnumber.setValue("\"" + step.getStepnum().toString() + "\"");
-		this.step.key = "\"Step\"";
+		this.step.setKey("\"Step\"");
 		this.step.setValue("\"" + step.getStep().toString() + "\"");
 		this.data.setKey("\"Data\"");
 		this.data.setValue("\"" + step.getData().toString() + "\"");

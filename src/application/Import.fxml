@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <SplitPane fx:id="mainsplit" dividerPositions="0.2449725776965265" minHeight="549.0" minWidth="565.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ImportController">
    <items>
@@ -13,6 +15,7 @@
          <children>
             <Button fx:id="openfilebtn" layoutX="433.0" layoutY="52.0" mnemonicParsing="false" onAction="#openFileHandler" text="Open File" />
             <TextField fx:id="filepathtxtfld" disable="true" editable="false" layoutX="32.0" layoutY="52.0" prefHeight="27.0" prefWidth="384.0" />
+            <Label fx:id="openfilelbl" alignment="CENTER" layoutX="37.0" layoutY="100.0" prefHeight="17.0" prefWidth="460.0" textFill="#3dff33" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="botsplit" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -24,7 +27,13 @@
             </TableView>
             <Pane fx:id="exportpane" layoutY="362.0" prefHeight="50.0" prefWidth="565.0">
                <children>
-                  <Button fx:id="exportbtn" layoutX="234.0" layoutY="13.0" mnemonicParsing="false" onAction="#exportJSONHandler" text="Export to JSON" />
+                  <Button fx:id="exportbtn" layoutX="234.0" layoutY="2.0" mnemonicParsing="false" onAction="#exportJSONHandler" text="Export to JSON" />
+                  <Label fx:id="exportlbl" alignment="CENTER" layoutX="53.0" layoutY="28.0" prefHeight="17.0" prefWidth="460.0" textFill="#3dff33" />
+                  <Button fx:id="clearallbtn" alignment="CENTER" layoutX="417.0" layoutY="4.0" maxHeight="22.0" maxWidth="55.0" minHeight="22.0" minWidth="55.0" mnemonicParsing="false" onAction="#clearAllHandler" prefHeight="22.0" prefWidth="55.0" style="-fx-background-color: #fd1a4a; -fx-border-color: #777777; -fx-border-width: 1;" text="Clear All" textFill="WHITE">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
                </children>
             </Pane>
          </children></AnchorPane>
