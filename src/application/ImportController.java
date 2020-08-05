@@ -232,7 +232,7 @@ public class ImportController implements Initializable {
 		htmlbuilder.append("</tr>" + "\n"
 							+ "</tbody>" + "\n"
 							+ "</table>");
-		System.out.println(htmlbuilder.toString());
+//		System.out.println(htmlbuilder.toString());
 		htmlarea.setText(htmlbuilder.toString());
 	}
 	@FXML

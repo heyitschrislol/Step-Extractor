@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.boris.winrun4j.eclipse.launch">
+    <stringAttribute key="dde.class" value=""/>
+    <booleanAttribute key="dde.enabled" value="false"/>
+    <stringAttribute key="dde.server" value=""/>
+    <stringAttribute key="dde.topic" value=""/>
+    <stringAttribute key="dde.window" value=""/>
+    <stringAttribute key="log" value=""/>
+    <stringAttribute key="log.level" value=""/>
+    <booleanAttribute key="log.overwrite" value="true"/>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/JIRA-Test-Stepper/src/application/Main.java"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="1"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+        <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
+    </listAttribute>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
+    <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-12.0.1"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="application.Main"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="jirateststepper"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="JIRA-Test-Stepper"/>
+    <stringAttribute key="process.priority" value="normal"/>
+    <stringAttribute key="single.instance" value="window"/>
+    <booleanAttribute key="splash.autohide" value="true"/>
+    <stringAttribute key="splash.image" value=""/>
+</launchConfiguration>
