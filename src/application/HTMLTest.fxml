@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.HTMLEditor?>
+
+
+<VBox fx:id="testpane" alignment="CENTER" maxHeight="549.0" maxWidth="565.0" minHeight="549.0" minWidth="565.0" prefHeight="549.0" prefWidth="565.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.HTMLTestController">
+   <children>
+      <HTMLEditor fx:id="htmleditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="494.0" prefWidth="565.0" />
+      <Button fx:id="testbtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#testBtnHandler" text="Button" />
+   </children>
+</VBox>

@@ -1,6 +1,7 @@
 package application;
 
 import java.io.BufferedReader;
+//import com.sun.tools.javac.util.StringUtils;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,23 +10,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.ResourceBundle;
-import application.Step;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.web.HTMLEditor;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -41,6 +42,7 @@ public class ImportController implements Initializable {
 	int jsonStepscount = 0;
 	int sortStepscount = 0;
 	File file;
+	File jsonfile;
 
 
 
@@ -49,9 +51,15 @@ public class ImportController implements Initializable {
 	@FXML
 	private Pane exportpane;
 	@FXML
+	private Pane tablepane;
+	@FXML
+	private Pane textpane;
+	@FXML
 	private Button openfilebtn;
 	@FXML
 	private Button exportbtn;
+	@FXML
+	private Button exporthtmlbtn;
 	@FXML
 	private Button clearallbtn;
 	@FXML
@@ -60,6 +68,8 @@ public class ImportController implements Initializable {
 	private Label openfilelbl;
 	@FXML
 	private TextField filepathtxtfld;
+	@FXML
+	private TextArea htmlarea;
 	@FXML
 	private TableView<Step> stepstable = new TableView<Step>();
 	@FXML
@@ -90,7 +100,9 @@ public class ImportController implements Initializable {
 		
 		try {
 			FileChooser chooser = new FileChooser();
-			chooser.getExtensionFilters().addAll(new ExtensionFilter("CSV Files", "*.csv"));
+			chooser.getExtensionFilters().addAll(new ExtensionFilter("CSV Files", "*.csv"), new ExtensionFilter("Text Files", "*.txt"));
+			chooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Documents"));
+
 			file = chooser.showOpenDialog(new Stage()).getAbsoluteFile();
 			if (file != null) {
 				openfilelbl.setTextFill(Color.web("3dff77"));
@@ -109,7 +121,7 @@ public class ImportController implements Initializable {
 					stepstable.getColumns().addAll(stepnumcol, stepcol, datacol, resultcol);
 				}
 				filepathtxtfld.setText(file.getPath());
-				
+				clearallbtn.setDisable(false);
 			}
 		} catch (FileNotFoundException e) {
 			openfilelbl.setTextFill(Color.web("fd1a4a"));
@@ -141,6 +153,7 @@ public class ImportController implements Initializable {
 		FileChooser chooser = new FileChooser();
 		chooser.setInitialFileName("jsonsteps.json");
 		chooser.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
+		chooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Documents"));
 		File file = chooser.showSaveDialog(new Stage());
 		if (file != null) {
 			File dir = file.getParentFile();// gets the selected directory
@@ -181,16 +194,46 @@ public class ImportController implements Initializable {
 						out.write("]");
 					}
 				}
+				jsonfile = file;
 				// Close the output stream
 				out.close();
 				exportlbl.setTextFill(Color.web("3dff77"));
 				exportlbl.setText("Steps exported as JSON file successfully!");
+				exporthtmlbtn.setDisable(false);
 			} catch (Exception e) {// Catch exception if any
 				System.err.println("Error: " + e.getMessage());
 				exportlbl.setTextFill(Color.web("fd1a4a"));
 				exportlbl.setText("JSON export failed. " + e.getMessage());
 			}
 		}
+	}
+	@FXML
+	public void exportHTMLHandler() {
+		tablepane.setDisable(true);
+		tablepane.setVisible(false);
+		textpane.setDisable(false);
+		textpane.setVisible(true);
+		htmlarea.setDisable(false);
+		htmlarea.setVisible(true);
+		StringBuilder htmlbuilder = new StringBuilder();
+		htmlbuilder.append("<table>" + "\n"
+				+ "<thead>" + "\n"
+				+ "<tr>" + "\n"
+				+ "<th>#</th>" + "\n"
+				+ "<th>Step</th>" + "\n"
+				+ "<th>Data</th>" + "\n"
+				+ "<th>Expected Results</th>" + "\n"
+				+ "</tr>" + "\n"
+				+ "</thead>" + "\n"
+				+ "<tbody>");
+		for (FormattedItem f : jsonsteps) {
+			htmlbuilder.append(f.htmlify());
+		}
+		htmlbuilder.append("</tr>" + "\n"
+							+ "</tbody>" + "\n"
+							+ "</table>");
+		System.out.println(htmlbuilder.toString());
+		htmlarea.setText(htmlbuilder.toString());
 	}
 	@FXML
 	public void clearAllHandler() {
@@ -211,6 +254,8 @@ public class ImportController implements Initializable {
 		if (stepstable.getItems().size() > 0) {
 			stepstable.getItems().clear();
 		}
+		exporthtmlbtn.setDisable(true);
+		clearallbtn.setDisable(true);
 	}
 
 	public ArrayList<String> readCSV(File path) throws IOException {
@@ -235,11 +280,13 @@ public class ImportController implements Initializable {
 				sb.append("%%" + line);
 			}
 		}
+		
 		lines = sb.toString().split("@");
 		for (String s : lines) {
 			if (s.isBlank()) {
 				s = "--";
 			}
+			
 			rawlines.add(s);
 			i++;
 		}

@@ -2,6 +2,9 @@ package application;
 
 import java.io.File;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class FormattedItem {
 	private Key<String, String> stepnumber = new Key<>();
 	private Key<String, String> step  = new Key<>();
@@ -55,7 +58,14 @@ public class FormattedItem {
 		this.result = result;
 	}
 	
-	public void saveJSON(File file) {
+	public String htmlify() {
+		String htmlline = "<tr>" + "\n"
+				+ "<td>" + stepnumber.getValue().replaceAll("\"", "").replaceAll("%%", "<br>") + "</td>" + "\n"
+				+ "<td>" + step.getValue().replaceAll("\"", "").replaceAll("%%", "<br>") + "</td>" + "\n"
+				+ "<td>" + data.getValue().replaceAll("\"", "").replaceAll("%%", "<br>") + "</td>" + "\n"
+				+ "<td>" + result.getValue().replaceAll("\"", "").replaceAll("%%", "<br>") + "</td>" + "\n"
+				+ "</tr>";
 		
+		return htmlline;
 	}
 }
