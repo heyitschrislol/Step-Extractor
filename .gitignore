@@ -1,2 +1,2 @@
 /target/
-*.properties
+target/classes/META-INF/maven/JIRA_Test_Stepper/JIRA_Test_Stepper/pom.properties

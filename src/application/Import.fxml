@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -20,20 +21,30 @@
       </AnchorPane>
       <AnchorPane fx:id="botsplit" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
-            <TableView fx:id="stepstable" editable="true" layoutY="2.0" prefHeight="360.0" prefWidth="565.0">
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
+            <Pane fx:id="textpane" disable="true" maxHeight="360.0" maxWidth="565.0" minHeight="360.0" minWidth="565.0" prefHeight="360.0" prefWidth="565.0">
+               <children>
+                  <TextArea fx:id="htmlarea" disable="true" editable="false" maxHeight="360.0" maxWidth="565.0" minHeight="360.0" minWidth="565.0" prefHeight="360.0" prefWidth="565.0" text="booboo" wrapText="true" />
+               </children>
+            </Pane>
+            <Pane fx:id="tablepane" maxHeight="360.0" maxWidth="565.0" minHeight="360.0" minWidth="565.0" prefHeight="360.0" prefWidth="565.0">
+               <children>
+                  <TableView fx:id="stepstable" editable="true" prefHeight="360.0" prefWidth="565.0">
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </Pane>
             <Pane fx:id="exportpane" layoutY="362.0" prefHeight="50.0" prefWidth="565.0">
                <children>
-                  <Button fx:id="exportbtn" layoutX="234.0" layoutY="2.0" mnemonicParsing="false" onAction="#exportJSONHandler" text="Export to JSON" />
+                  <Button fx:id="exportbtn" layoutX="41.0" layoutY="3.0" mnemonicParsing="false" onAction="#exportJSONHandler" text="Export to JSON" />
                   <Label fx:id="exportlbl" alignment="CENTER" layoutX="53.0" layoutY="28.0" prefHeight="17.0" prefWidth="460.0" textFill="#3dff33" />
-                  <Button fx:id="clearallbtn" alignment="CENTER" layoutX="417.0" layoutY="4.0" maxHeight="22.0" maxWidth="55.0" minHeight="22.0" minWidth="55.0" mnemonicParsing="false" onAction="#clearAllHandler" prefHeight="22.0" prefWidth="55.0" style="-fx-background-color: #fd1a4a; -fx-border-color: #777777; -fx-border-width: 1;" text="Clear All" textFill="WHITE">
+                  <Button fx:id="clearallbtn" alignment="CENTER" disable="true" layoutX="417.0" layoutY="4.0" maxHeight="22.0" maxWidth="55.0" minHeight="22.0" minWidth="55.0" mnemonicParsing="false" onAction="#clearAllHandler" prefHeight="22.0" prefWidth="55.0" style="-fx-background-color: #fd1a4a; -fx-border-color: #777777; -fx-border-width: 1;" text="Clear All" textFill="WHITE">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Button>
+                  <Button fx:id="exporthtmlbtn" contentDisplay="CENTER" disable="true" layoutX="227.0" layoutY="3.0" mnemonicParsing="false" onAction="#exportHTMLHandler" text="Export to HTML" />
                </children>
             </Pane>
          </children></AnchorPane>

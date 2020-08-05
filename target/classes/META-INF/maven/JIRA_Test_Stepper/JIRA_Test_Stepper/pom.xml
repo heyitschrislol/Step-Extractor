@@ -16,6 +16,7 @@
 				</excludes>
 			</resource>
 		</resources>
+
 		<plugins>
 			<plugin>
 				<groupId>org.openjfx</groupId>
@@ -39,6 +40,11 @@
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-fxml</artifactId>
 			<version>11.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-web</artifactId>
+			<version>16-ea+1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.openjfx</groupId>
