@@ -1,11 +1,10 @@
 package application;
 
-import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import application.ImportController;
 import javafx.fxml.FXMLLoader;
-import javafx.stage.FileChooser;
+
 
 /**
  * Utility class for controlling navigation between views.
@@ -66,7 +65,7 @@ public class ViewNavigator {
      *
      * @param fxml the fxml file to be loaded.
      */
-    public static void loadView(String fxml) {
+	public static void loadView(String fxml) {
         try {
             mainController.setView(FXMLLoader.load(ViewNavigator.class.getResource(fxml)));
         } catch (IOException e) {

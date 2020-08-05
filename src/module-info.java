@@ -6,6 +6,7 @@ module jirateststepper {
 	requires javafx.controls;
 	requires javafx.fxml;
 	requires javafx.graphics;
+	requires javafx.web;
 	
 	opens application;
 	exports application;
