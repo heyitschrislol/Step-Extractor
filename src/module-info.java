@@ -1,4 +1,4 @@
-module jirateststepper {
+module StepExtractor {
 	requires java.desktop;
 	requires java.logging;
 	requires java.sql;
@@ -10,5 +10,4 @@ module jirateststepper {
 	
 	opens application;
 	exports application;
-	
 }

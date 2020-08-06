@@ -6,27 +6,47 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.HTMLEditor?>
 
 <SplitPane fx:id="mainsplit" dividerPositions="0.2449725776965265" minHeight="549.0" minWidth="565.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ImportController">
    <items>
       <AnchorPane fx:id="topsplit" minHeight="0.0" minWidth="0.0" prefHeight="143.0" prefWidth="563.0" style="-fx-background-color: grey;" SplitPane.resizableWithParent="false">
          <children>
-            <Button fx:id="openfilebtn" layoutX="433.0" layoutY="52.0" mnemonicParsing="false" onAction="#openFileHandler" text="Open File" />
-            <TextField fx:id="filepathtxtfld" disable="true" editable="false" layoutX="32.0" layoutY="52.0" prefHeight="27.0" prefWidth="384.0" />
-            <Label fx:id="openfilelbl" alignment="CENTER" layoutX="37.0" layoutY="100.0" prefHeight="17.0" prefWidth="460.0" textFill="#3dff33" />
+            <Button fx:id="openfilebtn" layoutX="412.0" layoutY="22.0" mnemonicParsing="false" onAction="#openFileHandler" text="Open File" />
+            <TextField fx:id="filepathtxtfld" disable="true" editable="false" layoutX="20.0" layoutY="21.0" prefHeight="27.0" prefWidth="384.0" />
+            <Label fx:id="openfilelbl" alignment="CENTER" layoutX="52.0" layoutY="57.0" prefHeight="17.0" prefWidth="460.0" textFill="#3dff33" />
+            <Button fx:id="clearallbtn" alignment="CENTER" disable="true" layoutX="497.0" layoutY="24.0" maxHeight="22.0" maxWidth="55.0" minHeight="22.0" minWidth="55.0" mnemonicParsing="false" onAction="#clearAllHandler" prefHeight="22.0" prefWidth="55.0" style="-fx-background-color: #fd1a4a; -fx-border-color: #777777; -fx-border-width: 1;" text="Clear All" textFill="WHITE">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Button>
+            <ToolBar fx:id="previewbar" disable="true" layoutX="61.0" layoutY="102.0" maxHeight="30.0" maxWidth="565.0" minHeight="30.0" minWidth="442.0" prefHeight="30.0" prefWidth="442.0" style="-fx-background-color: gray;">
+              <items>
+                <Button fx:id="tableviewbtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showTableViewHandler" style="-fx-background-color: lightgray;" text="TableView" />
+                  <Button fx:id="jsonviewbtn" alignment="CENTER" mnemonicParsing="false" onAction="#showJSONHandler" text="Preview as JSON" />
+                  <Button fx:id="htmlrawviewbtn" alignment="CENTER" mnemonicParsing="false" onAction="#showHTMLHandler" text="Preview as HTML" />
+                  <Button fx:id="htmltableviewbtn" alignment="CENTER" mnemonicParsing="false" onAction="#showTableHandler" text="Preview as HTML Table" />
+              </items>
+            </ToolBar>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="botsplit" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
-            <Pane fx:id="textpane" disable="true" maxHeight="360.0" maxWidth="565.0" minHeight="360.0" minWidth="565.0" prefHeight="360.0" prefWidth="565.0">
+            <Pane fx:id="editorpane" disable="true" maxHeight="360.0" maxWidth="565.0" minHeight="360.0" minWidth="565.0" prefHeight="360.0" prefWidth="565.0">
                <children>
-                  <TextArea fx:id="htmlarea" disable="true" editable="false" maxHeight="360.0" maxWidth="565.0" minHeight="360.0" minWidth="565.0" prefHeight="360.0" prefWidth="565.0" text="booboo" wrapText="true" />
+                  <HTMLEditor fx:id="htmleditor" disable="true" htmlText="&lt;html&gt;&#10;&lt;head&gt;&#10;&lt;style&gt;&#10;.step {&#10;border: 1px solid black;&#10;}&#10;&lt;/style&gt;&#10; &lt;/head&gt;&#10;&lt;body contenteditable=&quot;true&quot;&gt;&#10;&lt;/body&gt;&#10;&lt;/html&gt;" maxHeight="360.0" maxWidth="565.0" minHeight="360.0" minWidth="565.0" prefHeight="360.0" prefWidth="565.0" visible="false" />
                </children>
             </Pane>
-            <Pane fx:id="tablepane" maxHeight="360.0" maxWidth="565.0" minHeight="360.0" minWidth="565.0" prefHeight="360.0" prefWidth="565.0">
+            <Pane fx:id="textpane" disable="true" maxHeight="360.0" maxWidth="565.0" minHeight="360.0" minWidth="565.0" prefHeight="360.0" prefWidth="565.0">
+               <children>
+                  <TextArea fx:id="textarea" disable="true" editable="false" maxHeight="360.0" maxWidth="565.0" minHeight="360.0" minWidth="565.0" prefHeight="360.0" prefWidth="565.0" text="booboo" wrapText="true" />
+               </children>
+            </Pane>
+            <Pane fx:id="tableviewpane" maxHeight="360.0" maxWidth="565.0" minHeight="360.0" minWidth="565.0" prefHeight="360.0" prefWidth="565.0">
                <children>
                   <TableView fx:id="stepstable" editable="true" prefHeight="360.0" prefWidth="565.0">
                      <columnResizePolicy>
@@ -37,14 +57,9 @@
             </Pane>
             <Pane fx:id="exportpane" layoutY="362.0" prefHeight="50.0" prefWidth="565.0">
                <children>
-                  <Button fx:id="exportbtn" layoutX="41.0" layoutY="3.0" mnemonicParsing="false" onAction="#exportJSONHandler" text="Export to JSON" />
+                  <Button fx:id="exportjsonbtn" disable="true" layoutX="100.0" layoutY="3.0" mnemonicParsing="false" onAction="#exportJSONHandler" text="Export to JSON" />
                   <Label fx:id="exportlbl" alignment="CENTER" layoutX="53.0" layoutY="28.0" prefHeight="17.0" prefWidth="460.0" textFill="#3dff33" />
-                  <Button fx:id="clearallbtn" alignment="CENTER" disable="true" layoutX="417.0" layoutY="4.0" maxHeight="22.0" maxWidth="55.0" minHeight="22.0" minWidth="55.0" mnemonicParsing="false" onAction="#clearAllHandler" prefHeight="22.0" prefWidth="55.0" style="-fx-background-color: #fd1a4a; -fx-border-color: #777777; -fx-border-width: 1;" text="Clear All" textFill="WHITE">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="exporthtmlbtn" contentDisplay="CENTER" disable="true" layoutX="227.0" layoutY="3.0" mnemonicParsing="false" onAction="#exportHTMLHandler" text="Export to HTML" />
+                  <Button fx:id="exporthtmlbtn" contentDisplay="CENTER" disable="true" layoutX="365.0" layoutY="3.0" mnemonicParsing="false" onAction="#exportHTMLHandler" text="Export to HTML" />
                </children>
             </Pane>
          </children></AnchorPane>
