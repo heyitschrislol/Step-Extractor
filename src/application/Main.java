@@ -30,7 +30,7 @@ public class Main extends Application {
 		});
 	}
 
-	private void handleExit() throws SQLException {
+	public void handleExit() throws SQLException {
 		// handle disposing of the timestamp thread
 		Platform.exit();
 		System.exit(0);
@@ -40,7 +40,7 @@ public class Main extends Application {
 	 * @return the loaded pane.
 	 * @throws IOException if the pane could not be loaded.
 	 */
-	private Pane loadMainPane() throws IOException, SQLException {
+	public Pane loadMainPane() throws IOException, SQLException {
 		FXMLLoader loader = new FXMLLoader();
 
 		Pane mainPane = (VBox) loader.load(getClass().getResourceAsStream(ViewNavigator.MAIN));
@@ -65,10 +65,11 @@ public class Main extends Application {
 		return scene;
 	}
 
+	
 	public static void main(String[] args) {
 		launch(args);
+
 	}
-	
 	
 	
 }

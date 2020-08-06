@@ -60,10 +60,10 @@ public class FormattedItem {
 	
 	public String htmlify() {
 		String htmlline = "<tr>" + "\n"
-				+ "<td>" + stepnumber.getValue().replaceAll("\"", "").replaceAll("%%", "<br>") + "</td>" + "\n"
-				+ "<td>" + step.getValue().replaceAll("\"", "").replaceAll("%%", "<br>") + "</td>" + "\n"
-				+ "<td>" + data.getValue().replaceAll("\"", "").replaceAll("%%", "<br>") + "</td>" + "\n"
-				+ "<td>" + result.getValue().replaceAll("\"", "").replaceAll("%%", "<br>") + "</td>" + "\n"
+				+ "<td style = 'border: 1px solid black'>" + stepnumber.getValue().replaceAll("\"", "").replaceAll("%%", "<br>") + "</td>" + "\n"
+				+ "<td style = 'border: 1px solid black'>" + step.getValue().replaceAll("\"", "").replaceAll("%%", "<br>") + "</td>" + "\n"
+				+ "<td style = 'border: 1px solid black'>" + data.getValue().replaceAll("\"", "").replaceAll("%%", "<br>") + "</td>" + "\n"
+				+ "<td style = 'border: 1px solid black'>" + result.getValue().replaceAll("\"", "").replaceAll("%%", "<br>") + "</td>" + "\n"
 				+ "</tr>";
 		
 		return htmlline;
