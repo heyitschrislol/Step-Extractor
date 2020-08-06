@@ -17,12 +17,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -36,6 +36,9 @@ public class ImportController implements Initializable {
 	ObservableList<Step> randomsteps = FXCollections.observableArrayList();
 	ObservableList<Step> teststeps = FXCollections.observableArrayList();
 	ObservableList<FormattedItem> jsonsteps = FXCollections.observableArrayList();
+	ArrayList<String> jsontext = new ArrayList<>();
+	StringBuilder htmltext = new StringBuilder();
+	StringBuilder jsontexty = new StringBuilder();
 	int readCSVcount = 0;
 	int remQuotescount = 0;
 	int openFilecount = 0;
@@ -43,6 +46,7 @@ public class ImportController implements Initializable {
 	int sortStepscount = 0;
 	File file;
 	File jsonfile;
+	File htmlfile;
 
 
 
@@ -51,17 +55,31 @@ public class ImportController implements Initializable {
 	@FXML
 	private Pane exportpane;
 	@FXML
-	private Pane tablepane;
+	private Pane tableviewpane;
+	@FXML
+	private Pane editorpane;
 	@FXML
 	private Pane textpane;
 	@FXML
 	private Button openfilebtn;
 	@FXML
-	private Button exportbtn;
+	private Button exportjsonbtn;
 	@FXML
 	private Button exporthtmlbtn;
 	@FXML
 	private Button clearallbtn;
+	@FXML
+	private Button showtablebtn;
+	@FXML
+	private Button tableviewbtn;
+	@FXML
+	private Button jsonviewbtn;
+	@FXML
+	private Button htmlrawviewbtn;
+	@FXML
+	private Button htmltableviewbtn;
+	@FXML
+	private ToolBar previewbar;
 	@FXML
 	private Label exportlbl;
 	@FXML
@@ -69,7 +87,9 @@ public class ImportController implements Initializable {
 	@FXML
 	private TextField filepathtxtfld;
 	@FXML
-	private TextArea htmlarea;
+	private TextArea textarea;
+	@FXML
+	private HTMLEditor htmleditor;
 	@FXML
 	private TableView<Step> stepstable = new TableView<Step>();
 	@FXML
@@ -101,7 +121,7 @@ public class ImportController implements Initializable {
 		try {
 			FileChooser chooser = new FileChooser();
 			chooser.getExtensionFilters().addAll(new ExtensionFilter("CSV Files", "*.csv"), new ExtensionFilter("Text Files", "*.txt"));
-			chooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Documents"));
+			chooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
 			file = chooser.showOpenDialog(new Stage()).getAbsoluteFile();
 			if (file != null) {
@@ -120,8 +140,15 @@ public class ImportController implements Initializable {
 				if (stepstable.getColumns().isEmpty()) {
 					stepstable.getColumns().addAll(stepnumcol, stepcol, datacol, resultcol);
 				}
+				convertToJSON();
+				convertToHTML();
+//				testExportJSON();
+//				testJSONArray();
 				filepathtxtfld.setText(file.getPath());
+				exportjsonbtn.setDisable(false);
 				clearallbtn.setDisable(false);
+				exporthtmlbtn.setDisable(false);
+				previewbar.setDisable(false);
 			}
 		} catch (FileNotFoundException e) {
 			openfilelbl.setTextFill(Color.web("fd1a4a"));
@@ -135,25 +162,15 @@ public class ImportController implements Initializable {
 		}
 		
 	}
-
 	@FXML
 	public void exportJSONHandler() {
-		int index = 0;
 		int size;
-		int sizeb;
-		FormattedItem item;
-		// populate the ObservableList<FormattedItem> with the sorted steps from the loaded csv
-		for (Step s : teststeps) {
-			jsonsteps.add(new FormattedItem(s));
-		}
-//		testExportJSON();
 		size = jsonsteps.size();
-		sizeb = teststeps.size();
 
 		FileChooser chooser = new FileChooser();
 		chooser.setInitialFileName("jsonsteps.json");
 		chooser.getExtensionFilters().addAll(new ExtensionFilter("JSON Files", "*.json"));
-		chooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Documents"));
+		chooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		File file = chooser.showSaveDialog(new Stage());
 		if (file != null) {
 			File dir = file.getParentFile();// gets the selected directory
@@ -162,44 +179,17 @@ public class ImportController implements Initializable {
 				// Create file
 				FileWriter stream = new FileWriter(file);
 				BufferedWriter out = new BufferedWriter(stream);
-				out.write("[");
 				out.newLine();
-				for (int i = 0; i < size; i++) {
-					item = jsonsteps.get(i);
-					if ((size - 1) != i) {
-						out.write("{");
-						out.newLine();
-						out.write(item.getStepnumber().getKey() + " : " + item.getStepnumber().getValue() + ",");
-						out.newLine();
-						out.write(item.getStep().getKey() + " : " + item.getStep().getValue() + ",");
-						out.newLine();
-						out.write(item.getData().getKey() + " : " + item.getData().getValue() + ",");
-						out.newLine();
-						out.write(item.getResult().getKey() + " : " + item.getResult().getValue());
-						out.newLine();
-						out.write("},");
-					} else {
-						out.write("{");
-						out.newLine();
-						out.write(item.getStepnumber().getKey() + " : " + item.getStepnumber().getValue() + ",");
-						out.newLine();
-						out.write(item.getStep().getKey() + " : " + item.getStep().getValue() + ",");
-						out.newLine();
-						out.write(item.getData().getKey() + " : " + item.getData().getValue() + ",");
-						out.newLine();
-						out.write(item.getResult().getKey() + " : " + item.getResult().getValue());
-						out.newLine();
-						out.write("}");
-						out.newLine();
-						out.write("]");
-					}
-				}
+//				for (int i = 0; i < size; i++) {
+//					out.write(jsontext.get(i));
+//					out.newLine();
+//				}
+				out.write(jsontexty.toString());
 				jsonfile = file;
 				// Close the output stream
 				out.close();
 				exportlbl.setTextFill(Color.web("3dff77"));
 				exportlbl.setText("Steps exported as JSON file successfully!");
-				exporthtmlbtn.setDisable(false);
 			} catch (Exception e) {// Catch exception if any
 				System.err.println("Error: " + e.getMessage());
 				exportlbl.setTextFill(Color.web("fd1a4a"));
@@ -209,31 +199,123 @@ public class ImportController implements Initializable {
 	}
 	@FXML
 	public void exportHTMLHandler() {
-		tablepane.setDisable(true);
-		tablepane.setVisible(false);
+		tableviewpane.setDisable(true);
+		tableviewpane.setVisible(false);
 		textpane.setDisable(false);
 		textpane.setVisible(true);
-		htmlarea.setDisable(false);
-		htmlarea.setVisible(true);
-		StringBuilder htmlbuilder = new StringBuilder();
-		htmlbuilder.append("<table>" + "\n"
-				+ "<thead>" + "\n"
-				+ "<tr>" + "\n"
-				+ "<th>#</th>" + "\n"
-				+ "<th>Step</th>" + "\n"
-				+ "<th>Data</th>" + "\n"
-				+ "<th>Expected Results</th>" + "\n"
-				+ "</tr>" + "\n"
-				+ "</thead>" + "\n"
-				+ "<tbody>");
-		for (FormattedItem f : jsonsteps) {
-			htmlbuilder.append(f.htmlify());
+		textarea.setDisable(false);
+		textarea.setVisible(true);
+		FileChooser chooser = new FileChooser();
+		chooser.setInitialFileName("htmlstepsTBL.html");
+		chooser.getExtensionFilters().addAll(new ExtensionFilter("HTML Files", "*.html"), new ExtensionFilter("Text Files", "*.txt"));
+		chooser.setInitialDirectory(new File(System.getProperty("user.home")));
+		File file = chooser.showSaveDialog(new Stage());
+		if (file != null) {
+			File dir = file.getParentFile();// gets the selected directory
+			chooser.setInitialDirectory(dir);
+			try {
+				// Create file
+				FileWriter stream = new FileWriter(file);
+				BufferedWriter out = new BufferedWriter(stream);
+				out.newLine();
+				out.write(htmltext.toString());
+				jsonfile = file;
+				// Close the output stream
+				out.close();
+				exportlbl.setTextFill(Color.web("3dff77"));
+				exportlbl.setText("Steps exported as HTML file successfully!");
+			} catch (Exception e) {// Catch exception if any
+				System.err.println("Error: " + e.getMessage());
+				exportlbl.setTextFill(Color.web("fd1a4a"));
+				exportlbl.setText("HTML export failed. " + e.getMessage());
+			}
 		}
-		htmlbuilder.append("</tr>" + "\n"
-							+ "</tbody>" + "\n"
-							+ "</table>");
-//		System.out.println(htmlbuilder.toString());
-		htmlarea.setText(htmlbuilder.toString());
+	}
+	@FXML
+	public void showTableViewHandler() {
+		/*
+		 * TURN ON
+		*/
+		tableviewpane.setDisable(false);
+		tableviewpane.setVisible(true);
+		
+		
+		/*
+		 * TURN OFF
+		*/
+		textpane.setDisable(true);
+		textpane.setVisible(false);
+		textarea.setDisable(true);
+		textarea.setVisible(false);
+		editorpane.setDisable(true);
+		editorpane.setVisible(false);
+		htmleditor.setDisable(true);
+		htmleditor.setVisible(false);
+	}
+	public void showJSONHandler() {
+	/*
+	 * TURN ON
+	*/
+		textpane.setDisable(false);
+		textpane.setVisible(true);
+		textarea.setDisable(false);
+		textarea.setVisible(true);
+		textarea.setText(htmltext.toString());
+//		for (String s : jsontext) {
+//			textarea.setText(textarea.getText() + "\n" + s);
+//		}
+		textarea.setText(jsontexty.toString());
+
+	/*
+	 * TURN OFF
+	*/
+		tableviewpane.setDisable(true);
+		tableviewpane.setVisible(false);
+		editorpane.setDisable(true);
+		editorpane.setVisible(false);
+		htmleditor.setDisable(true);
+		htmleditor.setVisible(false);
+	}
+	public void showHTMLHandler() {
+	/*
+	 * TURN ON
+	 */
+		textpane.setDisable(false);
+		textpane.setVisible(true);
+		textarea.setDisable(false);
+		textarea.setVisible(true);
+		textarea.setText(htmltext.toString());
+	
+	/*
+	 * TURN OFF
+	 */
+		tableviewpane.setDisable(true);
+		tableviewpane.setVisible(false);
+		editorpane.setDisable(true);
+		editorpane.setVisible(false);
+		htmleditor.setDisable(true);
+		htmleditor.setVisible(false);
+	}
+	@FXML
+	public void showTableHandler() {
+		/*
+		 * TURN ON
+		*/
+		editorpane.setDisable(false);
+		editorpane.setVisible(true);
+		htmleditor.setDisable(false);
+		htmleditor.setVisible(true);
+		htmleditor.setHtmlText(htmltext.toString());
+		
+		/*
+		 * TURN OFF
+		*/
+		tableviewpane.setDisable(true);
+		tableviewpane.setVisible(false);
+		textpane.setDisable(true);
+		textpane.setVisible(false);
+		textarea.setDisable(true);
+		textarea.setVisible(false);
 	}
 	@FXML
 	public void clearAllHandler() {
@@ -251,13 +333,34 @@ public class ImportController implements Initializable {
 		if (jsonsteps.size() > 0) {
 			jsonsteps.clear();
 		}
+		if (jsontext.size() > 0) {
+			jsontext.clear();
+		}
+		if (jsontexty.length() > 0) {
+			jsontexty.delete(0, jsontexty.length());
+		}
 		if (stepstable.getItems().size() > 0) {
 			stepstable.getItems().clear();
 		}
 		exporthtmlbtn.setDisable(true);
+		exportjsonbtn.setDisable(true);
 		clearallbtn.setDisable(true);
 	}
 
+	
+	
+		/* 
+		 * --------------------------------------------------------------------------------------------------------
+		 * -----------------------------------------------------------G O S E---------------------------------------------------
+		 * -- T H E S E   M E T H O D S   A R E   T H E   G O L D E N   G O S E    R I G H T   H E R E--------------------------------
+		 * ---------------------------------------------------------------G O S E----------------------------------------------------
+		 * ----------------------------------------------------------------------------------------------------------------------------
+		*/ 
+	
+	
+	/*
+	 * Method to read the data from the source CSV file, filet it, and place the result in an ArrayList<String>
+	 */
 	public ArrayList<String> readCSV(File path) throws IOException {
 		String line = "";
 		StringBuilder sb = new StringBuilder();
@@ -280,13 +383,11 @@ public class ImportController implements Initializable {
 				sb.append("%%" + line);
 			}
 		}
-		
 		lines = sb.toString().split("@");
 		for (String s : lines) {
 			if (s.isBlank()) {
 				s = "--";
 			}
-			
 			rawlines.add(s);
 			i++;
 		}
@@ -294,6 +395,10 @@ public class ImportController implements Initializable {
 //		testReadCSV(rawlines);
 		return rawlines;
 	}
+	
+	/*
+	 * Method to remove quotation marks from the extracted data since those become problematic when converting the data to JSON format
+	 */
 	public ArrayList<String> removeQuotes(ArrayList<String> rawlines) {
 		String formattedtext = "";
 		ArrayList<String> formattedlines = new ArrayList<>();
@@ -307,23 +412,103 @@ public class ImportController implements Initializable {
 //		testRemoveQuotes(formattedlines);
 		return formattedlines;
 	}
-
+	
+	/*
+	 * Method that sorts the extracted data into 2 separate custom classes: Step and FormattedItem. Each Step and each FormattedItem is 
+	 * then stored in a class-level ObservableList that holds its particular class type.
+	 */
 	public ObservableList<Step> sortSteps(ArrayList<String> rawlines) {
 		int index = 0;
 		int count = 0;
+		Step step;
 		String[] pholder = new String[3];
 		for (int i = 0; i < rawlines.size(); i++) {
 			pholder[index] = rawlines.get(i);
 			if (index == 2) {
 				index = 0;
 				count++;
-				teststeps.add(new Step(String.valueOf(count), pholder[0], pholder[1], pholder[2]));
+				step = new Step(String.valueOf(count), pholder[0], pholder[1], pholder[2]);
+				teststeps.add(step);
+				jsonsteps.add(new FormattedItem(step));
 			} else {
 				index++;
 			}
 		}
 //		testSortSteps(teststeps);
 		return teststeps;
+	}
+	
+	/*
+	 * Method that converts the ObservableList of FormattedItems to JSON text and places each line in a class-level ArrayList
+	 */
+	public void convertToJSON() {
+		int index = 0;
+		int size;
+		int sizeb;
+		FormattedItem item;
+		// populate the ObservableList<FormattedItem> with the sorted steps from the loaded csv
+//		for (Step s : teststeps) {
+//			jsonsteps.add(new FormattedItem(s));
+//		}
+		size = jsonsteps.size();
+		sizeb = teststeps.size();
+		jsontexty.append("[" + "\n");
+//		jsontext.add("[");
+		for (int i = 0; i < size; i++) {
+			item = jsonsteps.get(i);
+			if ((size - 1) != i) {
+//				jsontext.add("{");
+				jsontexty.append("{"  + "\n");
+				jsontexty.append(item.getStepnumber().getKey() + " : " + item.getStepnumber().getValue() + "," + "\n");
+				jsontexty.append(item.getStep().getKey() + " : " + item.getStep().getValue() + "," + "\n");
+				jsontexty.append(item.getData().getKey() + " : " + item.getData().getValue() + "," + "\n");
+				jsontexty.append(item.getResult().getKey() + " : " + item.getResult().getValue() + "," + "\n");
+				jsontexty.append("}" + "\n");
+//				jsontext.add(item.getStepnumber().getKey() + " : " + item.getStepnumber().getValue() + ",");
+//				jsontext.add(item.getStep().getKey() + " : " + item.getStep().getValue() + ",");
+//				jsontext.add(item.getData().getKey() + " : " + item.getData().getValue() + ",");
+//				jsontext.add(item.getResult().getKey() + " : " + item.getResult().getValue());
+				jsontext.add("},");
+			} else {
+				jsontexty.append("{"  + "\n");
+				jsontexty.append(item.getStepnumber().getKey() + " : " + item.getStepnumber().getValue() + "," + "\n");
+				jsontexty.append(item.getStep().getKey() + " : " + item.getStep().getValue() + "," + "\n");
+				jsontexty.append(item.getData().getKey() + " : " + item.getData().getValue() + "," + "\n");
+				jsontexty.append(item.getResult().getKey() + " : " + item.getResult().getValue() + "," + "\n");
+				jsontexty.append("}"  + "\n");
+				jsontexty.append("]");
+
+				
+//				jsontext.add("{");
+//				jsontext.add(item.getStepnumber().getKey() + " : " + item.getStepnumber().getValue() + ",");
+//				jsontext.add(item.getStep().getKey() + " : " + item.getStep().getValue() + ",");
+//				jsontext.add(item.getData().getKey() + " : " + item.getData().getValue() + ",");
+//				jsontext.add(item.getResult().getKey() + " : " + item.getResult().getValue());
+//				jsontext.add("}");
+//				jsontext.add("]");
+			}
+		}
+	}
+	public void convertToHTML() {
+		StringBuilder htmlbuilder = new StringBuilder();
+		htmlbuilder.append("<table style = 'font-size: 10px'>" + "\n"
+				+ "<thead>" + "\n"
+				+ "<tr style = 'border: 1px solid black'>" + "\n"
+				+ "<th style = 'border: 1px solid black'>#</th>" + "\n"
+				+ "<th style = 'border: 1px solid black'>Step</th>" + "\n"
+				+ "<th style = 'border: 1px solid black'>Data</th>" + "\n"
+				+ "<th style = 'border: 1px solid black'>Expected Results</th>" + "\n"
+				+ "</tr>" + "\n"
+				+ "</thead>" + "\n"
+				+ "<tbody>");
+		for (FormattedItem f : jsonsteps) {
+			htmlbuilder.append(f.htmlify());
+		}
+		htmlbuilder.append("</tr>" + "\n"
+							+ "</tbody>" + "\n"
+							+ "</table>");
+		htmltext = htmlbuilder;
+
 	}
 	public void clearTable() {
 		if (stepstable.getItems().size() > 0) {
@@ -382,6 +567,16 @@ public class ImportController implements Initializable {
 		System.out.println("The 'exportJSONHandler' method has finished running, the List of Steps was converted to a list of FormattedSteps and written to a JSON file");
 		System.out.println("the resulting observablelist called 'jsonsteps' is size: " + (jsonStepscount));
 		System.out.println("---------");
+	}
+	public void testJSONArray() {
+		System.out.println( "A R R A Y   J S O N   P H A S E");
+		System.out.println( "---------------------------------------------");
+		System.out.println("The 'exportJSONHandler' method has finished running, the List of Steps was converted to a list of FormattedSteps and written to a JSON file");
+		System.out.println("---------");
+		for (int i = 0; i < jsontext.size(); i++) {
+			System.out.println(jsontext.get(i));
+		}
+		
 	}
 	public void testReadCSV(ArrayList<String> rawlines) {
 		System.out.println( "R E A D   C S V   P H A S E");
