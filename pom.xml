@@ -2,10 +2,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>JIRATestStepper</groupId>
-	<artifactId>JIRATestStepper</artifactId>
-	<version>0.0.1-SSHOT</version>
-	<name>JIRA Test Stepper</name>
+	<groupId>JIRAStepExtractor</groupId>
+	<artifactId>StepExtractor</artifactId>
+	<version>0.1</version>
+	<name>JIRA Steps</name>
+	<properties>
+         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+         <maven.compiler.source>12</maven.compiler.source>
+         <maven.compiler.target>12</maven.compiler.target>
+     </properties>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
@@ -25,7 +30,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>application.Main.java</mainClass>
+							<mainClass>Main</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
