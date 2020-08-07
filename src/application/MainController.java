@@ -15,7 +15,7 @@ public class MainController {
      *
      * @param node the pane node to be swapped in.
      */
-    public void setView(Node node) {
+    public void setView(@SuppressWarnings("exports") Node node) {
         viewHolder.getChildren().setAll(node);
     }
 }

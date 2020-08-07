@@ -28,7 +28,7 @@ public class ViewNavigator {
 
     /** The main application layout controller. */
     private static MainController mainController;
-    private static ImportController importController;
+//    private static ImportController importController;
 
 
     /**
@@ -38,9 +38,6 @@ public class ViewNavigator {
      */
     public static void setMainController(MainController mainController) {
         ViewNavigator.mainController = mainController;
-    }
-    public static void setLoginController(ImportController loginController) {
-        ViewNavigator.importController = loginController;
     }
 	public static void setUrl(String url) {
 		ViewNavigator.url = url;

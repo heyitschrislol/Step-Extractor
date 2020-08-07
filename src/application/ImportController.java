@@ -36,9 +36,8 @@ public class ImportController implements Initializable {
 	ObservableList<Step> randomsteps = FXCollections.observableArrayList();
 	ObservableList<Step> teststeps = FXCollections.observableArrayList();
 	ObservableList<FormattedItem> jsonsteps = FXCollections.observableArrayList();
-	ArrayList<String> jsontext = new ArrayList<>();
 	StringBuilder htmltext = new StringBuilder();
-	StringBuilder jsontexty = new StringBuilder();
+	StringBuilder jsontext = new StringBuilder();
 	int readCSVcount = 0;
 	int remQuotescount = 0;
 	int openFilecount = 0;
@@ -184,7 +183,7 @@ public class ImportController implements Initializable {
 //					out.write(jsontext.get(i));
 //					out.newLine();
 //				}
-				out.write(jsontexty.toString());
+				out.write(jsontext.toString());
 				jsonfile = file;
 				// Close the output stream
 				out.close();
@@ -264,7 +263,7 @@ public class ImportController implements Initializable {
 //		for (String s : jsontext) {
 //			textarea.setText(textarea.getText() + "\n" + s);
 //		}
-		textarea.setText(jsontexty.toString());
+		textarea.setText(jsontext.toString());
 
 	/*
 	 * TURN OFF
@@ -333,11 +332,8 @@ public class ImportController implements Initializable {
 		if (jsonsteps.size() > 0) {
 			jsonsteps.clear();
 		}
-		if (jsontext.size() > 0) {
-			jsontext.clear();
-		}
-		if (jsontexty.length() > 0) {
-			jsontexty.delete(0, jsontexty.length());
+		if (jsontext.length() > 0) {
+			jsontext.delete(0, jsontext.length());
 		}
 		if (stepstable.getItems().size() > 0) {
 			stepstable.getItems().clear();
@@ -452,40 +448,26 @@ public class ImportController implements Initializable {
 //		}
 		size = jsonsteps.size();
 		sizeb = teststeps.size();
-		jsontexty.append("[" + "\n");
+		jsontext.append("[" + "\n");
 //		jsontext.add("[");
 		for (int i = 0; i < size; i++) {
 			item = jsonsteps.get(i);
 			if ((size - 1) != i) {
-//				jsontext.add("{");
-				jsontexty.append("{"  + "\n");
-				jsontexty.append(item.getStepnumber().getKey() + " : " + item.getStepnumber().getValue() + "," + "\n");
-				jsontexty.append(item.getStep().getKey() + " : " + item.getStep().getValue() + "," + "\n");
-				jsontexty.append(item.getData().getKey() + " : " + item.getData().getValue() + "," + "\n");
-				jsontexty.append(item.getResult().getKey() + " : " + item.getResult().getValue() + "," + "\n");
-				jsontexty.append("}" + "\n");
-//				jsontext.add(item.getStepnumber().getKey() + " : " + item.getStepnumber().getValue() + ",");
-//				jsontext.add(item.getStep().getKey() + " : " + item.getStep().getValue() + ",");
-//				jsontext.add(item.getData().getKey() + " : " + item.getData().getValue() + ",");
-//				jsontext.add(item.getResult().getKey() + " : " + item.getResult().getValue());
-				jsontext.add("},");
-			} else {
-				jsontexty.append("{"  + "\n");
-				jsontexty.append(item.getStepnumber().getKey() + " : " + item.getStepnumber().getValue() + "," + "\n");
-				jsontexty.append(item.getStep().getKey() + " : " + item.getStep().getValue() + "," + "\n");
-				jsontexty.append(item.getData().getKey() + " : " + item.getData().getValue() + "," + "\n");
-				jsontexty.append(item.getResult().getKey() + " : " + item.getResult().getValue() + "," + "\n");
-				jsontexty.append("}"  + "\n");
-				jsontexty.append("]");
+				jsontext.append("{"  + "\n");
+				jsontext.append(item.getStepnumber().getKey() + " : " + item.getStepnumber().getValue() + "," + "\n");
+				jsontext.append(item.getStep().getKey() + " : " + item.getStep().getValue() + "," + "\n");
+				jsontext.append(item.getData().getKey() + " : " + item.getData().getValue() + "," + "\n");
+				jsontext.append(item.getResult().getKey() + " : " + item.getResult().getValue() + "," + "\n");
+				jsontext.append("}" + "\n");
 
-				
-//				jsontext.add("{");
-//				jsontext.add(item.getStepnumber().getKey() + " : " + item.getStepnumber().getValue() + ",");
-//				jsontext.add(item.getStep().getKey() + " : " + item.getStep().getValue() + ",");
-//				jsontext.add(item.getData().getKey() + " : " + item.getData().getValue() + ",");
-//				jsontext.add(item.getResult().getKey() + " : " + item.getResult().getValue());
-//				jsontext.add("}");
-//				jsontext.add("]");
+			} else {
+				jsontext.append("{"  + "\n");
+				jsontext.append(item.getStepnumber().getKey() + " : " + item.getStepnumber().getValue() + "," + "\n");
+				jsontext.append(item.getStep().getKey() + " : " + item.getStep().getValue() + "," + "\n");
+				jsontext.append(item.getData().getKey() + " : " + item.getData().getValue() + "," + "\n");
+				jsontext.append(item.getResult().getKey() + " : " + item.getResult().getValue() + "," + "\n");
+				jsontext.append("}"  + "\n");
+				jsontext.append("]");
 			}
 		}
 	}
@@ -573,10 +555,6 @@ public class ImportController implements Initializable {
 		System.out.println( "---------------------------------------------");
 		System.out.println("The 'exportJSONHandler' method has finished running, the List of Steps was converted to a list of FormattedSteps and written to a JSON file");
 		System.out.println("---------");
-		for (int i = 0; i < jsontext.size(); i++) {
-			System.out.println(jsontext.get(i));
-		}
-		
 	}
 	public void testReadCSV(ArrayList<String> rawlines) {
 		System.out.println( "R E A D   C S V   P H A S E");

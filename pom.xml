@@ -25,10 +25,32 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>Main</mainClass>
+							<mainClass>Prime</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.4</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>application.Prime</mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.openjfx</groupId>
@@ -63,5 +85,11 @@
 			<artifactId>javafx-controls</artifactId>
 			<version>13</version>
 		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-graphics</artifactId>
+			<version>16-ea+1</version>
+		</dependency>
+
 	</dependencies>
 </project>

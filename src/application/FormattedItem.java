@@ -1,10 +1,5 @@
 package application;
 
-import java.io.File;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 public class FormattedItem {
 	private Key<String, String> stepnumber = new Key<>();
 	private Key<String, String> step  = new Key<>();

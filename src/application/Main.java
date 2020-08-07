@@ -1,22 +1,20 @@
 package application;
 
-import java.awt.Desktop;
 import java.io.IOException;
 import java.sql.SQLException;
-import application.MainController;
-import application.ViewNavigator;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 
 public class Main extends Application {
-	private static Desktop desktop = Desktop.getDesktop();
+//	private static Desktop desktop = Desktop.getDesktop();
 	
+	@SuppressWarnings("exports")
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("JIRA Stepper");
 		primaryStage.setScene(createScene(loadMainPane()));
@@ -40,13 +38,11 @@ public class Main extends Application {
 	 * @return the loaded pane.
 	 * @throws IOException if the pane could not be loaded.
 	 */
+	@SuppressWarnings("exports")
 	public Pane loadMainPane() throws IOException, SQLException {
 		FXMLLoader loader = new FXMLLoader();
-
 		Pane mainPane = (VBox) loader.load(getClass().getResourceAsStream(ViewNavigator.MAIN));
-
 		MainController mainController = loader.getController();
-
 		ViewNavigator.setMainController(mainController);
 		ViewNavigator.loadView(ViewNavigator.IMPORT);
 
@@ -64,11 +60,8 @@ public class Main extends Application {
 		Scene scene = new Scene(mainPane);
 		return scene;
 	}
-
-	
 	public static void main(String[] args) {
 		launch(args);
-
 	}
 	
 	
