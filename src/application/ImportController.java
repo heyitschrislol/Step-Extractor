@@ -44,9 +44,11 @@ public class ImportController implements Initializable {
 	int openFilecount = 0;
 	int jsonStepscount = 0;
 	int sortStepscount = 0;
+	FileChooser chooser = new FileChooser();
 	File file;
 	File jsonfile;
 	File htmlfile;
+	String currentdir = "";
 
 
 
@@ -117,14 +119,15 @@ public class ImportController implements Initializable {
 	@FXML
 	public void openFileHandler() throws IOException {
 		clearAllHandler();
-		
-		try {
-			FileChooser chooser = new FileChooser();
-			chooser.getExtensionFilters().addAll(new ExtensionFilter("CSV Files", "*.csv"), new ExtensionFilter("Text Files", "*.txt"));
+		String test = System.getProperty("os.name");
+		if (currentdir.isBlank()) {
 			chooser.setInitialDirectory(new File(System.getProperty("user.home")));
-
+		}
+		try {
+			chooser.getExtensionFilters().addAll(new ExtensionFilter("CSV Files", "*.csv"), new ExtensionFilter("Text Files", "*.txt"));
 			file = chooser.showOpenDialog(new Stage()).getAbsoluteFile();
 			if (file != null) {
+				currentdir = file.getAbsolutePath();
 				openfilelbl.setTextFill(Color.web("3dff77"));
 				openfilelbl.setText("CSV file opened successfully");
 				jsonsteps.clear();
@@ -180,10 +183,6 @@ public class ImportController implements Initializable {
 				FileWriter stream = new FileWriter(file);
 				BufferedWriter out = new BufferedWriter(stream);
 				out.newLine();
-//				for (int i = 0; i < size; i++) {
-//					out.write(jsontext.get(i));
-//					out.newLine();
-//				}
 				out.write(jsontexty.toString());
 				jsonfile = file;
 				// Close the output stream
@@ -261,9 +260,6 @@ public class ImportController implements Initializable {
 		textarea.setDisable(false);
 		textarea.setVisible(true);
 		textarea.setText(htmltext.toString());
-//		for (String s : jsontext) {
-//			textarea.setText(textarea.getText() + "\n" + s);
-//		}
 		textarea.setText(jsontexty.toString());
 
 	/*
@@ -342,6 +338,7 @@ public class ImportController implements Initializable {
 		if (stepstable.getItems().size() > 0) {
 			stepstable.getItems().clear();
 		}
+		textarea.clear();
 		exporthtmlbtn.setDisable(true);
 		exportjsonbtn.setDisable(true);
 		clearallbtn.setDisable(true);
@@ -447,27 +444,19 @@ public class ImportController implements Initializable {
 		int sizeb;
 		FormattedItem item;
 		// populate the ObservableList<FormattedItem> with the sorted steps from the loaded csv
-//		for (Step s : teststeps) {
-//			jsonsteps.add(new FormattedItem(s));
-//		}
+
 		size = jsonsteps.size();
 		sizeb = teststeps.size();
 		jsontexty.append("[" + "\n");
-//		jsontext.add("[");
 		for (int i = 0; i < size; i++) {
 			item = jsonsteps.get(i);
 			if ((size - 1) != i) {
-//				jsontext.add("{");
 				jsontexty.append("{"  + "\n");
 				jsontexty.append(item.getStepnumber().getKey() + " : " + item.getStepnumber().getValue() + "," + "\n");
 				jsontexty.append(item.getStep().getKey() + " : " + item.getStep().getValue() + "," + "\n");
 				jsontexty.append(item.getData().getKey() + " : " + item.getData().getValue() + "," + "\n");
 				jsontexty.append(item.getResult().getKey() + " : " + item.getResult().getValue() + "," + "\n");
 				jsontexty.append("}" + "\n");
-//				jsontext.add(item.getStepnumber().getKey() + " : " + item.getStepnumber().getValue() + ",");
-//				jsontext.add(item.getStep().getKey() + " : " + item.getStep().getValue() + ",");
-//				jsontext.add(item.getData().getKey() + " : " + item.getData().getValue() + ",");
-//				jsontext.add(item.getResult().getKey() + " : " + item.getResult().getValue());
 				jsontext.add("},");
 			} else {
 				jsontexty.append("{"  + "\n");
@@ -477,15 +466,6 @@ public class ImportController implements Initializable {
 				jsontexty.append(item.getResult().getKey() + " : " + item.getResult().getValue() + "," + "\n");
 				jsontexty.append("}"  + "\n");
 				jsontexty.append("]");
-
-				
-//				jsontext.add("{");
-//				jsontext.add(item.getStepnumber().getKey() + " : " + item.getStepnumber().getValue() + ",");
-//				jsontext.add(item.getStep().getKey() + " : " + item.getStep().getValue() + ",");
-//				jsontext.add(item.getData().getKey() + " : " + item.getData().getValue() + ",");
-//				jsontext.add(item.getResult().getKey() + " : " + item.getResult().getValue());
-//				jsontext.add("}");
-//				jsontext.add("]");
 			}
 		}
 	}
