@@ -7,8 +7,8 @@ import javafx.scene.layout.StackPane;
 public class MainController {
 /** Holder of a switchable pane. */
 	// poopypop
-    // jordan makes me so butt
-    // jesus why don't jordan shutup he so sassy
+    // I AM GOING TO SPANK JORDAN'S HINEY
+    // THERE IS NOTHING
     @FXML
     private StackPane viewHolder;
 
