@@ -8,7 +8,8 @@ public class MainController {
 /** Holder of a switchable pane. */
 	// poopypop
     // I AM GOING TO SPANK JORDAN'S HINEY
-    // THERE IS NOTHING
+    // THERE IS NOTHING HE CAN DO TO STOP THIS SPANKING
+    // HAHA
     @FXML
     private StackPane viewHolder;
 
