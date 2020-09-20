@@ -1,7 +1,6 @@
 package application;
 
 import java.io.BufferedReader;
-//import com.sun.tools.javac.util.StringUtils;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,7 +31,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 public class ImportController implements Initializable {
-
+// test
 	ObservableList<Step> randomsteps = FXCollections.observableArrayList();
 	ObservableList<Step> teststeps = FXCollections.observableArrayList();
 	ObservableList<FormattedItem> jsonsteps = FXCollections.observableArrayList();
