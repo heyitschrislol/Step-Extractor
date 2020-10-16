@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Built-By: Chris
-Build-Jdk: 14.0.2
-Main-Class: Main
-Created-By: Maven Integration for Eclipse
-
